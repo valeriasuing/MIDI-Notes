@@ -1,3 +1,7 @@
+//Demo for sending MIDI Notes Messages 
+//Followed this tutorial: https://ask.video/article/audio-hardware/how-to-build-a-simple-diy-usb-midi-controller-using-teensy
+//Bounce, fallingEdge and risingEdge were new concepts introduced by this tutorial 
+
 #include <Bounce.h>
 
 //number of push buttons for MIDI keyboard 
@@ -54,11 +58,13 @@ void loop() {
     //Falling Edge - falling = high (not pressed - voltage from pullup resistor) to low (pressed - button connects pin to ground) 
     if (buttons[i].fallingEdge())
     {
+      //send MIDI note
       usbMIDI.sendNoteOn(MIDI_NOTE_NUMS[i], 110, MIDI_CHAN);
     }
     //Rising = low (pressed) to high (not pressed)
     else if (buttons[i].risingEdge()) 
     {
+       //send MIDI note OFF
       usbMIDI.sendNoteOff (MIDI_NOTE_NUMS[i], 110, MIDI_CHAN);
     }
   }
